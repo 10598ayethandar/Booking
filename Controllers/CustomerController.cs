@@ -60,6 +60,94 @@ namespace .API.Controllers
             }
         }
 
+        [HttpPost("Login")]
+        public async Task<IActionResult> Login(LoginRequest request)
+        {
+            try
+            {
+                var response = await _repo.Login(request);
+                if (response == null)
+                {
+                    return BadRequest(new {status = StatusCodes.Status400BadRequest,message = "No Result Found!"});
+                }
+                else if (response.StatusCode == StatusCodes.Status500InternalServerError)
+                {
+                    return StatusCode(response.StatusCode, response);
+                }
+                return Ok(response);
+            }
+            catch(Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,e.Message);
+            }
+        }
+
+        [HttpGet("GetCustomerProfileById")]
+        public async Task<IActionResult> GetCustomerProfileById(GetCustomerProfileRequest request)
+        {
+            try
+            {
+                var response = await _repo.GetCustomerProfileById(request);
+                if (response == null)
+                {
+                    return BadRequest(new {status = StatusCodes.Status400BadRequest,message = "No Result Found!"});
+                }
+                else if (response.StatusCode == StatusCodes.Status500InternalServerError)
+                {
+                    return StatusCode(response.StatusCode, response);
+                }
+                return Ok(response);
+            }
+            catch(Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,e.Message);
+            }
+        }
+
+        [HttpPost("ResetPassword")]
+        public async Task<IActionResult> ResetPassword(ResetPasswordRequest request)
+        {
+            try
+            {
+                var response = await _repo.ResetPassword(request);
+                if (response == null)
+                {
+                    return BadRequest(new {status = StatusCodes.Status400BadRequest,message = "No Result Found!"});
+                }
+                else if (response.StatusCode == StatusCodes.Status500InternalServerError)
+                {
+                    return StatusCode(response.StatusCode, response);
+                }
+                return Ok(response);
+            }
+            catch(Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,e.Message);
+            }
+        }
+
+        [HttpPost("ChangePassword")]
+        public async Task<IActionResult> ChangePassword(ChangePasswordRequest request)
+        {
+            try
+            {
+                var response = await _repo.ChangePassword(request);
+                if (response == null)
+                {
+                    return BadRequest(new {status = StatusCodes.Status400BadRequest,message = "No Result Found!"});
+                }
+                else if (response.StatusCode == StatusCodes.Status500InternalServerError)
+                {
+                    return StatusCode(response.StatusCode, response);
+                }
+                return Ok(response);
+            }
+            catch(Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,e.Message);
+            }
+        }
+
 
     }
 }

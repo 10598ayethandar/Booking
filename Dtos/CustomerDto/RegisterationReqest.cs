@@ -9,5 +9,7 @@ namespace Booking.API.Dtos.CustomerDto
         [Required]
         public string Email {get;set;}
         public string PhoneNo {get;set;}
+        [Required]
+        public string Password {get;set;}
     }
 }
