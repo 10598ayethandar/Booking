@@ -18,6 +18,7 @@ namespace Booking.API.Context
         
          public virtual DbSet<Customer> Customer { get; set; }
          public virtual DbSet<Booking> Booking {get;set;}
+         public virtual DbSet<CountryType> CountryType {get;set;}
          public virtual DbSet<Class> Class {get;set;}
          public virtual DbSet<Customer> Customer {get;set;}
          public virtual DbSet<Packages> Packages {get;set;}

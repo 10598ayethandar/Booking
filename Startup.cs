@@ -101,6 +101,32 @@ namespace Booking
                         };
                     });
 
+                 try
+                {
+                    //Quartz
+                    services.AddQuartz(q =>
+                    {
+                        q.UseMicrosoftDependencyInjectionScopedJobFactory();
+                        // Just use the name of your job that you created in the Jobs folder.
+                        var jobKey = new JobKey("WaitListRefund");
+                        q.AddJob<BirthdayNoti>(opts => opts.WithIdentity(jobKey));
+
+                        q.AddTrigger(opts => opts
+                            .ForJob(jobKey)
+                            .WithIdentity("WaitListRefund-trigger")
+                            //This Cron interval can be described as "run every minute" (when second is zero)
+                            .WithCronSchedule("0 0 09 ? * *")
+                        );
+                    });
+                    services.AddQuartzHostedService(q => q.WaitForJobsToComplete = true);
+                }
+                catch(Exception e)
+                {
+                    log.Error("" + e.Message);
+                    throw e;
+                }
+            
+
                 
 
                 services.AddControllers();

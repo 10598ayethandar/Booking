@@ -16,34 +16,32 @@ using DeviceDetectorNET.Parser;
 using Newtonsoft.Json;
 using System.Diagnostics;
 using Booking.API.Models;
-using Booking.API.Dtos.CustomerDto;
+using Booking.API.Dtos.PackageDto;
 
 
-namespace Customer.API.Controllers
+namespace Package.API.Controllers
 {
 
     [Route("api/[controller]")]
     [ApiController]    
-    public class ProductController : ControllerBase
+    public class PackageController : ControllerBase
     {
-        private readonly IProductRepository _repo;
+        private readonly IPackageRepository _repo;
        
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public ProductController(IProductRepository repo, IHttpContextAccessor httpContextAccessor)
+        public ProductController(IPackageRepository repo, IHttpContextAccessor httpContextAccessor)
         {
             _repo = repo;
             _httpContextAccessor = httpContextAccessor;
         }
 
-        
-           
-        [HttpPost("Registration")]
-        public async Task<IActionResult> Registration(RegistrationRequest request)
+        [HttpGet("GetCountryType")]
+        public async Task<IActionResult> GetCountryType()
         {
             try
             {
-                var response = await _repo.Registration(request);
+                var response = await _repo.GetCountryType();
                 if (response == null)
                 {
                     return BadRequest(new {status = StatusCodes.Status400BadRequest,message = "No Result Found!"});
@@ -60,12 +58,12 @@ namespace Customer.API.Controllers
             }
         }
 
-        [HttpPost("Login")]
-        public async Task<IActionResult> Login(LoginRequest request)
+        [HttpGet("GetAllPackageInfo")]
+        public async Task<IActionResult> GetAllPackageInfo(int CountryTypeId)
         {
             try
             {
-                var response = await _repo.Login(request);
+                var response = await _repo.GetAllPackageInfo(CountryTypeId);
                 if (response == null)
                 {
                     return BadRequest(new {status = StatusCodes.Status400BadRequest,message = "No Result Found!"});
@@ -82,12 +80,12 @@ namespace Customer.API.Controllers
             }
         }
 
-        [HttpGet("GetCustomerProfileById")]
-        public async Task<IActionResult> GetCustomerProfileById(GetCustomerProfileRequest request)
+        [HttpGet("GetMyPackageInfo")]
+        public async Task<IActionResult> GetMyPackageInfo(int CustomerId)
         {
             try
             {
-                var response = await _repo.GetCustomerProfileById(request);
+                var response = await _repo.RegistrGetMyPackageInfoation(CustomerId);
                 if (response == null)
                 {
                     return BadRequest(new {status = StatusCodes.Status400BadRequest,message = "No Result Found!"});
@@ -103,51 +101,5 @@ namespace Customer.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError,e.Message);
             }
         }
-
-        [HttpPost("ResetPassword")]
-        public async Task<IActionResult> ResetPassword(ResetPasswordRequest request)
-        {
-            try
-            {
-                var response = await _repo.ResetPassword(request);
-                if (response == null)
-                {
-                    return BadRequest(new {status = StatusCodes.Status400BadRequest,message = "No Result Found!"});
-                }
-                else if (response.StatusCode == StatusCodes.Status500InternalServerError)
-                {
-                    return StatusCode(response.StatusCode, response);
-                }
-                return Ok(response);
-            }
-            catch(Exception e)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError,e.Message);
-            }
-        }
-
-        [HttpPost("ChangePassword")]
-        public async Task<IActionResult> ChangePassword(ChangePasswordRequest request)
-        {
-            try
-            {
-                var response = await _repo.ChangePassword(request);
-                if (response == null)
-                {
-                    return BadRequest(new {status = StatusCodes.Status400BadRequest,message = "No Result Found!"});
-                }
-                else if (response.StatusCode == StatusCodes.Status500InternalServerError)
-                {
-                    return StatusCode(response.StatusCode, response);
-                }
-                return Ok(response);
-            }
-            catch(Exception e)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError,e.Message);
-            }
-        }
-
-
     }
 }

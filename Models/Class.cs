@@ -8,7 +8,9 @@ namespace Booking.API.Models
         public string ClassName { get; set; }
         public int RequiredCredits { get; set; }
         public DateTime StartTime { get; set; }
-        public DateTime ExpiredTime {get;set;}
+        public int Duration {get;set;}
         public int AvailableSlots { get; set; }
+        public int CountryTypeId {get;set;}
+        public virtual CountryType CountryType {get;set;}
     }
 }
