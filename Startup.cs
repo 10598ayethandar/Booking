@@ -138,6 +138,7 @@ namespace Booking
                 //payemnt
                 services.AddMvcCore();
                 services.AddControllersWithViews();
+                services.AddMemoryCache();
 
         }
 

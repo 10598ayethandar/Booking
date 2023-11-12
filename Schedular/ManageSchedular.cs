@@ -46,7 +46,7 @@ namespace Booking.Schedular
                     if(endDate == DateTime.Now)
                     {
                         var waitList = await _contex.WaitList.Where(x =>x.ClassId == item.ClassId).ToList();
-                        
+                        // refurn code
                     }
                 }
                 

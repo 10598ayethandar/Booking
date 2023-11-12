@@ -10,7 +10,6 @@ namespace Booking.API.Models
         public int PackageId {get;set;}
         public DateTime BookingDate { get; set; }
         public BookingStatus Status { get; set; }
-
         public virtual Class Class {get;set;}
         public virtual Customer Customer {get;set;}
         public virtual Packages Packages {get;set;}
